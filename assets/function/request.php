@@ -1,6 +1,4 @@
 <?php
-
-
 function connectdb()
 {
     try {
@@ -59,12 +57,59 @@ function registerUser($login, $password, $email){
     $pdo = connectdb();
     $query = $pdo->prepare("INSERT INTO users(`login`, `password`, `email`)  VALUES (:login,:password,:email)");
     $query->execute(["login"=>$login, "password"=>$password, "email"=>$email]);
+    getuserInfo($login);
     dbClose();
 }
 
 function addTask($id, $task){
     $pdo = connectdb();
-    $query = $pdo->prepare("INSERT INTO running_tasks(`user_id`, `task`, `creation_date`)  VALUES (:id,:task,date('d-m-y'))");
+    $date = date('Y-m-d');
+    $status = "En cours";
+    $query = $pdo->prepare("INSERT INTO running_tasks(`user_id`, `task`, `creation_date`)  VALUES (:id,:task,'$date')");
     $query->execute(["id"=>$id, "task"=>$task]);
     dbClose();
+    return $pdo->lastInsertId();
 }
+
+function getTask($id){
+    $pdo = connectdb();
+    $query = $pdo->prepare("SELECT * from running_tasks WHERE end_date IS NULL AND user_id=:user_id");
+    $query->execute(["user_id"=>$id]);
+    $allresult = $query->fetchAll();
+    return $allresult;
+}
+
+
+function doneTaskList($id){
+    $pdo = connectdb();
+    $query = $pdo->prepare("SELECT * from running_tasks WHERE end_date IS NOT NULL AND user_id=:user_id");
+    $query->execute(["user_id"=>$id]);
+    $allresult = $query->fetchAll();
+    return $allresult;
+}
+
+if (isset($_POST['done_task_id']))
+{
+    $date = date('Y-m-d');
+    $pdo = connectdb();
+    $query = $pdo->prepare("UPDATE `running_tasks` SET `status`='Terminé',`end_date`='$date' WHERE id=:id");
+    $query->execute(["id"=>$_POST['done_task_id']]);
+    $query1 = $pdo->prepare("SELECT * FROM `running_tasks` WHERE id=:id");
+    $query1->execute(["id"=>$_POST['done_task_id']]);
+    $allresult = $query1->fetchAll();
+    echo "<tr>";
+    echo "<td>" .$allresult[0]['task'] . "</td>";
+    echo "<td>" .$allresult[0]['creation_date'] . "</td>";
+    echo "<td>" .$allresult[0]['end_date'] . "</td>";
+    echo "<tr>";
+
+}
+
+if (isset($_POST['cancel_task_id']))
+{
+    $pdo = connectdb();
+    $query = $pdo->prepare("DELETE FROM `running_tasks` WHERE id=:id");
+    $query->execute(["id"=>$_POST['cancel_task_id']]);
+}
+
+

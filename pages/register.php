@@ -1,22 +1,15 @@
 <?php
 require_once '../assets/function/request.php';
-?>
-
-
-
-<?php
-if (isset($_POST['login'])){
-    $login = htmlspecialchars($_POST['login']);
-    $password = htmlspecialchars($_POST['password']);
-    $email = htmlspecialchars($_POST['email']);
+session_start();
+if (isset($_POST['login_register'])){
+    $login = htmlspecialchars($_POST['login_register']);
+    $password = htmlspecialchars($_POST['password_register']);
+    $email = htmlspecialchars($_POST['email_register']);
     connectdb();
-    var_dump(checkUserLogin($login));
     if (empty(checkUserLogin($login))){
-        var_dump(checkUserEmail($email));
         if (empty(checkUserEmail($email))){
             $password = password_hash($password, PASSWORD_BCRYPT);
             registerUser($login,$password,$email);
-            echo "Votre inscription à bien été prise en compte, vous allez être redirigé vers l'accueil";
         }
         else
         {
@@ -29,5 +22,3 @@ if (isset($_POST['login'])){
     }
 }
 ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="script.js"></script>

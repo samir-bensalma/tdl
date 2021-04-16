@@ -14,9 +14,12 @@ if (isset($_POST['login']))
             return getuserInfo($login);
         }
         else{
-            return false;
+            echo "Mot de passe incorrect";
         }
     }
-    return false;
+    else{
+        echo "Login inconnu";
+
+    }
 }
 dbClose();
