@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  background: url("./img/bg.jpg");
+  color: white;
+  width: 100%;
+}
+
+#header,
+#header_log {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 20px;
+}
+
+#header_log {
+  width: 100%;
+}
+
+#header_log a {
+  margin-right: 30px;
+  color: white;
+}
+
+#form {
+  margin-top: 30px;
+}
+
+#form h2 {
+  text-align: center;
+}
+
+#form #btn-index {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 30px;
+  height: 40px;
+}
+
+#btn-index button {
+  font-size: 20px;
+  padding-top: 5px, 10px, 5px, 10px;
+  background-color: #524dfe;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  box-shadow: 0px 0px 5px 3px gainsboro !important;
+}
+
+h2 {
+  margin: 0;
+  margin-top: 3%;
+}
+
+#task_form_div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#running {
+  display: flex;
+  justify-content: center;
+}
+
+#task_table_container,
+#done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+thead {
+  font-weight: bold;
+}
+
+#task_table,
+#done_task_table {
+  min-width: 60%;
+  border-collapse: collapse;
+  color: black;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+}
+
+#task_table tr td,
+#done_task_table tr td {
+  padding: 3px;
+  text-align: center;
+}
+
+#task_description {
+  min-width: 300px;
+}
+
+input[type="button"],
+button {
+  font-size: 15px;
+  padding-top: 3px, 5px, 3px, 5px;
+  background-color: #524dfe;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  box-shadow: 0px 0px 2px 1px black !important;
+}
